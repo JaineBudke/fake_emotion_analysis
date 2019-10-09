@@ -29,7 +29,6 @@ class calcFeatureValues:
 	def eb_distance(self):
 		return (self.shape[22][0] - self.shape[21][0])
 
-
 	def eeb_distance(self):
 		return (((self.shape[19][1] - self.shape[37][1]) + (self.shape[24][1] - self.shape[44][1]))/2)
 
@@ -80,3 +79,13 @@ class calcFeatureValues:
 
 		return features
 
+	def featureValuesDifference(self, features, neutral_features ):
+		features = {
+		  "ieb_height": self.ieb_height(),      "oeb_height": self.oeb_height(),
+		  "eb_frowned": self.eb_frowned(),      "eb_slanting": self.eb_slanting(),
+		  "eb_distance": self.eb_distance(),	"eeb_distance": self.eeb_distance(),
+		  "e_openness": self.e_openness(),      "e_slanting": self.e_slanting(),
+		  "m_openness": self.m_openness(),	    "m_mos": self.m_mos(),
+		  "m_width": self.m_width(), 			"mul_height": self.mul_height(),
+		  "mll_height": self.mll_height(),	    "lc_height": self.lc_height()
+		}

@@ -74,13 +74,15 @@ class imageProcess:
 			# for each item (image), start processing
 			for item in items:
 
-			
 				# row initialize
-				row_dict = { "emotion": "", "fake": 0, "1": True, "2": True,
-				 "4": True, "5": True, "6": True, "7": True,
-				 "9": True, "10": True, "12": True, "15": True,
-				 "16": True, "17": True, "20": True, "23": True,
-				 "24": True, "25": True, "26": True, "27": True
+				row_dict = { "emotion": "", "fake": 0, "AU1": True, "AU2": True,
+				 "AU4": True, "AU5": True, "AU6": True, "AU7": True,
+				 "AU9": True, "AU10": True, "AU12": True, "AU15": True,
+				 "AU16": True, "AU17": True, "AU20": True, "AU23": True,
+				 "AU24": True, "AU25": True, "AU26": True, "AU27": True,
+				 "ieb_height":0.0, "oeb_height":0.0, "eb_frowned":0.0, "eb_slanting":0.0, 
+				 "eb_distance":0.0, "eeb_distance":0.0, "e_openness":0.0, "e_slanting":0.0, 
+				 "m_openness":0.0, "m_mos":0.0, "m_width":0.0, "mul_height":0.0, "mll_height":0.0, "lc_height":0.0
 				}
 
 
@@ -122,6 +124,10 @@ class imageProcess:
 					for au, value in AUs.items():
 						row_dict[au] = value
 
+
+					for x in features:
+  						row_dict[x] = round( features[x] - neutral_features[x], 6)
+
 					self.df = self.df.append(row_dict, ignore_index=True)
 
 				
@@ -138,11 +144,14 @@ class imageProcess:
 		for directories in emotionDirectories:
 			
 			# row initialize
-			row_dict = { "emotion": "", "fake": 0, "1": True, "2": True,
-			 "4": True, "5": True, "6": True, "7": True,
-			 "9": True, "10": True, "12": True, "15": True,
-			 "16": True, "17": True, "20": True, "23": True,
-			 "24": True, "25": True, "26": True, "27": True
+			row_dict = { "emotion": "", "fake": 0, "AU1": True, "AU2": True,
+			 "AU4": True, "AU5": True, "AU6": True, "AU7": True,
+			 "AU9": True, "AU10": True, "AU12": True, "AU15": True,
+			 "AU16": True, "AU17": True, "AU20": True, "AU23": True,
+			 "AU24": True, "AU25": True, "AU26": True, "AU27": True,
+			 "ieb_height":0.0, "oeb_height":0.0, "eb_frowned":0.0, "eb_slanting":0.0, 
+			 "eb_distance":0.0, "eeb_distance":0.0, "e_openness":0.0, "e_slanting":0.0, 
+			 "m_openness":0.0, "m_mos":0.0, "m_width":0.0, "mul_height":0.0, "mll_height":0.0, "lc_height":0.0
 			}
 
 			# detect emotion labeled 
@@ -208,6 +217,10 @@ class imageProcess:
 						for au, value in AUs.items():
 							row_dict[au] = value
 
+						for x in features:
+							row_dict[x] = round( features[x] - neutral_features[x], 6)
+
+
 						self.df = self.df.append(row_dict, ignore_index=True)
 		
 
@@ -215,9 +228,12 @@ class imageProcess:
 	def main(self):
 
 		# initialize dataframe
-		self.df = self.df.reindex(columns = ['emotion', 'fake', '1', '2', '4', '5', '6', 
-							   '7', '9', '10', '12', '15', '16', '17', '20', 
-							   '23', '24', '25', '26', '27'])
+		self.df = self.df.reindex(columns = ['emotion', 'fake', 'AU1', 'AU2', 'AU4', 'AU5', 'AU6', 
+							   'AU7', 'AU9', 'AU10', 'AU12', 'AU15', 'AU16', 'AU17', 'AU20', 
+							   'AU23', 'AU24', 'AU25', 'AU26', 'AU27', "ieb_height", "oeb_height", 
+							   "eb_frowned", "eb_slanting", "eb_distance", "eeb_distance", "e_openness", 
+							   "e_slanting", "m_openness", "m_mos", "m_width", "mul_height", "mll_height", "lc_height"
+							   ])
 
 		# relative path
 		self.my_path = os.path.abspath(os.path.dirname(__file__))
@@ -236,7 +252,7 @@ class imageProcess:
 		self.fakeDirectory()
 		self.genuineDirectory()
 
-		print(self.df)
+		self.df.to_csv("facialFeatures.csv")
 
 
 		

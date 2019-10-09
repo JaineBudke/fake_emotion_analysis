@@ -16,7 +16,7 @@ class AUInference:
 		self.neutral_shape = neutral_shape
 		self.neutral_features = neutral_features
 
-
+	
 	def AU1(self):
 		return ((self.features['ieb_height'] > (self.neutral_features['ieb_height'] + 0.075)) and (self.shape[22][1] >= self.neutral_shape[22][1]) and (self.shape[21][1] >= self.neutral_shape[21][1]))
 
@@ -88,9 +88,9 @@ class AUInference:
 	def getAllActionUnits(self):
 
 		AUs = {
-		   "1": self.AU1(),   "2": self.AU2(),   "4": self.AU4(),   "5": self.AU5(),   "6": self.AU6(),   "7": self.AU7(),
-		   "9": self.AU9(),  "10": self.AU10(), "12": self.AU12(), "15": self.AU15(), "16": self.AU16(), "17": self.AU17(),
-		  "20": self.AU20(), "23": self.AU23(), "24": self.AU24(), "25": self.AU25(), "26": self.AU26(), "27": self.AU27()
+		   "AU1": self.AU1(),   "AU2": self.AU2(),   "AU4": self.AU4(),   "AU5": self.AU5(),   "AU6": self.AU6(),   "AU7": self.AU7(),
+		   "AU9": self.AU9(),  "AU10": self.AU10(), "AU12": self.AU12(), "AU15": self.AU15(), "AU16": self.AU16(), "AU17": self.AU17(),
+		  "AU20": self.AU20(), "AU23": self.AU23(), "AU24": self.AU24(), "AU25": self.AU25(), "AU26": self.AU26(), "AU27": self.AU27()
 		}
 
 		return AUs
