@@ -13,7 +13,9 @@ A base de dados de emoções performáticas utilizada é a IMPA-FACES3D, obtida 
 
 ## Para executar:
 
-python3 imageProcess.py
+
+    python3 imageProcess.py
+    
 
 
 
