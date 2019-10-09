@@ -244,9 +244,6 @@ class imageProcess:
 		# detect the face
 		self.detector = dlib.get_frontal_face_detector()
 		
-		# TROCAR DETECTOR DA FACE PELO DO OPENCV
-		#haar_cascade_face = cv2.CascadeClassifier(self.my_path+ '/haarcascade_frontalface_default.xml')
-		#faces_rects = haar_cascade_face.detectMultiScale(test_image_gray, scaleFactor = 1.8, minNeighbors = 5);
 
 
 		self.fakeDirectory()
