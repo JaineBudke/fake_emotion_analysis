@@ -75,7 +75,7 @@ class knn:
 		
 		# recupera cada um dos valores dos FVs da base de dados de x e de k
 		count = 0
-		for fv in range(21, 34):
+		for fv in range(23, 33):
 
 			vx = int(self.data.iloc[x, fv])
 			vk = int(k[count])
@@ -117,6 +117,7 @@ total = 0
 
 
 
+
 # percorre todos os dados do dataset
 for count in range(len(happy)):
 
@@ -128,7 +129,7 @@ for count in range(len(happy)):
 	knnHappy = knn( len(newHappy), newHappy )
 
 
-	result = knnHappy.calculate( happy.iloc[count, 21 :] ) 
+	result = knnHappy.calculate( happy.iloc[count, 23:34] ) 
 
 	if( result == 1.0 and happy.iloc[count, 2] == 1.0 ):
 		truePositive += 1
@@ -156,7 +157,7 @@ for count in range(len(sad)):
 	knnSad = knn( len(newSad), newSad )
 
 
-	result = knnSad.calculate( sad.iloc[count, 21 :] )
+	result = knnSad.calculate( sad.iloc[count, 23:34] )
 
 	if( result == 1.0 and sad.iloc[count, 2] == 1.0 ):
 		truePositive += 1
@@ -172,9 +173,8 @@ for count in range(len(sad)):
 
 
 	total += 1
-	
-'''
 
+'''
 
 print(truePositive)
 print(falsePositive)

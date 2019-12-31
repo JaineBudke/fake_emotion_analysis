@@ -262,13 +262,13 @@ dataCohn = pd.read_csv('facialFeatures-cohn.csv')
 
 
 
-data_happy = data[data["emotion"] == "happy"]
+#data_happy = data[data["emotion"] == "happy"]
 data_sad = data[data["emotion"] == "sad"]
 
 cohn_sad = dataCohn[dataCohn["emotion"] == "sad"]
 
 
-frames = [data_sad, cohn_sad]
+frames = [cohn_sad,data_sad]
 sad = pd.concat(frames)
 
 
