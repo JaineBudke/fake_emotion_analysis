@@ -25,7 +25,6 @@ class knn:
 		# Mede a distância do novo dado com todos os outros dados que já estão classificados
 		# percorre o dataframe
 		for index in range( len( self.data ) ):
-			
 
 			# computa a distancia de manhattan entre os pontos do dataframe e o novo ponto
 			dist = self.manhattanDistance( newData, index )
@@ -44,7 +43,7 @@ class knn:
 			if( dist < maior ):
 				self.distList[indexMaior] = [index, dist]
 
-
+		
 		return self.classifier()
 	
 
@@ -57,7 +56,7 @@ class knn:
 		# percorre a classe dos dados de menor distância e conta a quantidade que aparece de cada classe (fake or genuine)
 		for elem in self.distList:
 			fakeGenuine = int(self.data.iloc[elem[0], 2])
-		
+
 			if( fakeGenuine == 1 ):
 				fake += 1
 			elif( fakeGenuine == 0 ):
@@ -65,9 +64,9 @@ class knn:
 
 		# Toma como resultado a classe que mais apareceu dentre os dados que tiveram as menores distâncias
 		if( fake > genuine ):
-			return "fake"
+			return 1.0
 		else:
-			return "genuine"
+			return 0.0
 		
 
 	def manhattanDistance( self, k, x ):
@@ -94,27 +93,93 @@ class knn:
 
 
 data = pd.read_csv('facialFeatures.csv') 
-
 dataCohn = pd.read_csv('facialFeatures-cohn.csv') 
 
 
-genuine = data[data["fake"] == 0.0 ]
+
+data_happy = data[data["emotion"] == "happy"]
+cohn_happy = dataCohn[dataCohn["emotion"] == "happy"]
+
+frames = [cohn_happy,data_happy]
+happy = pd.concat(frames)
 
 
-genuine_happy = genuine[genuine["emotion"] == "happy" ]
-fake_happy    = dataCohn[dataCohn["emotion"] == "happy"]
+# deu que é fake e era fake mesmo
+truePositive  = 0
+# deu fake, mas era genuina
+falsePositive = 0
+# deu que é genuina e era genuina mesmo
+trueNegative  = 0
+# deu que é genuina, mas era fake
+falseNegative = 0
+
+total = 0
+
+
+
+# percorre todos os dados do dataset
+for count in range(len(happy)):
+
+
+	# apaga o dado corrente a ser analisado pelo algoritmo
+	newHappy = happy.drop( happy.iloc[count, 0] )
+
+	# chama o algoritmo com o dataset sem o dado corrente
+	knnHappy = knn( len(newHappy), newHappy )
+
+
+	result = knnHappy.calculate( happy.iloc[count, 21 :] ) 
+
+	if( result == 1.0 and happy.iloc[count, 2] == 1.0 ):
+		truePositive += 1
+
+	elif( result == 0.0 and happy.iloc[count, 2] == 0.0 ):
+		trueNegative += 1
+
+	elif( result == 1.0 and happy.iloc[count, 2] == 0.0 ):
+		falsePositive += 1
+
+	elif( result == 0.0 and happy.iloc[count, 2] == 1.0 ):
+		falseNegative += 1
+
+
+	total += 1
+
 
 '''
-happy = data[data["emotion"] == "happy"]
-sad = data[data["emotion"] == "sad"]
+
+
+for count in range(len(sad)):
+
+
+	newSad = sad.drop( sad.iloc[count, 0] )
+	knnSad = knn( len(newSad), newSad )
+
+
+	result = knnSad.calculate( sad.iloc[count, 21 :] )
+
+	if( result == 1.0 and sad.iloc[count, 2] == 1.0 ):
+		truePositive += 1
+
+	elif( result == 0.0 and sad.iloc[count, 2] == 0.0 ):
+		trueNegative += 1
+
+	elif( result == 1.0 and sad.iloc[count, 2] == 0.0 ):
+		falsePositive += 1
+
+	elif( result == 0.0 and sad.iloc[count, 2] == 1.0 ):
+		falseNegative += 1
+
+
+	total += 1
+	
 '''
 
-# valores dos feature values do novo dado coletado
-newDataGenuine = genuine_happy.iloc[0, 21 :]
-newDataFake = fake_happy.iloc[0, 21 :]
 
-newDataGenuine[]
+print(truePositive)
+print(falsePositive)
+print(trueNegative)
+print(falseNegative)
 
+print( total )
 
-knnSad = knn( len(happy), happy )
-print( knnSad.calculate( newData ) )
